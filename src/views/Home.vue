@@ -117,22 +117,7 @@ export default {
 			trippleSize: 34, // 点击显示的红点样式
 			trippleVisible: false, // 红点是否显示
 			stageOffset: [0, 0], // 当前点击的红点坐标
-			points: [
-				{
-					code: "1", // 唯一标识
-					positionLeft: 0, // x坐标
-					positionTop: 10, // y坐标
-					zIndex: 1, // 深度zIndex
-					iconSize: 33, // 默认大小
-				},
-				{
-					code: "2", // 唯一标识
-					positionLeft: 40, // x坐标
-					positionTop: 10, // y坐标
-					zIndex: 2, // 深度zIndex
-					iconSize: 33, // 默认大小
-				},
-			],
+			points: [],
 		}
 	},
 	computed: {
