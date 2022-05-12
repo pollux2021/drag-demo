@@ -74,7 +74,8 @@ export default {
 	},
 	mounted() {
 		this.$nextTick(function () {
-			const container = this.$el.parentNode
+			const parentEl = this.$el.parentNode
+			const container = this.$refs.container
 			this.getImgSize(this.url)
 			this.addImageEvents()
 			addEvent(
@@ -85,11 +86,10 @@ export default {
 			)
 			if (container) {
 				this.wheelZoom()
-				addEvent(container, "mouseout", () => {
-					this.disabled = true
+				addEvent(parentEl, "mouseout", e => {
+					this.disabled = e.relatedTarget !== parentEl
 				})
-				addEvent(container, "mouseenter", () => {
-					console.log("mouseenter")
+				addEvent(parentEl, "mouseenter", () => {
 					this.disabled = false
 				})
 			}
