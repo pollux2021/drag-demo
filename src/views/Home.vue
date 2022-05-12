@@ -8,6 +8,7 @@
 					图片正在加载中
 				</div>
 				<div class="status-toast" v-if="imageState === 'noimage'">暂无图片</div>
+				<!-- 点击效果 -->
 				<transition name="fade">
 					<div
 						v-if="trippleVisible"
@@ -22,9 +23,6 @@
 					:trippleSize="trippleSize"
 					:trippleVisible="trippleVisible"
 				>
-					<template #touchtripe>
-						<div class="tripple">tripple</div>
-					</template>
 					<template #default="{ imageW, imageH, scale }">
 						<vue-drag-custom
 							v-for="point in points"
@@ -43,10 +41,9 @@
 							:handles="['tl', 'tr', 'br', 'bl']"
 							:scaleRatio="scale"
 							:lockAspectRatio="true"
-							:parentW="imageW"
-							:parentH="imageH"
 							:onDrag="onDrag"
 						>
+							<!-- 自定义节点 -->
 							<span class="dot">{{ point.code }}</span>
 						</vue-drag-custom>
 					</template>
