@@ -157,8 +157,8 @@ export default {
 				...POINT_DEFAULT,
 				code: this.points.length + 1,
 				zIndex: this.points.length + 1,
-				positionLeft: this.touchParentOffset[0] || 0,
-				positionTop: this.touchParentOffset[1] || 0,
+				positionLeft: this.touchParentOffset[0] - 17 || 0,
+				positionTop: this.touchParentOffset[1] - 17 || 0,
 			})
 		},
 
