@@ -6,7 +6,7 @@
 </template>
 <script>
 import VueDragCustom from "./vue-drag-custom/vue-draggable-resizable.vue"
-import { addEvent } from "./vue-drag-custom/utils/dom"
+import { addEvent, removeEvent } from "./vue-drag-custom/utils/dom"
 export default {
 	name: "DragImage",
 	components: {
@@ -32,6 +32,7 @@ export default {
 	},
 	data() {
 		return {
+			disabled: false,
 			x: 0,
 			y: 0,
 			scale: 1,
@@ -73,27 +74,34 @@ export default {
 	},
 	mounted() {
 		this.$nextTick(function () {
+			const container = this.$el.parentNode
 			this.getImgSize(this.url)
 			this.addImageEvents()
-			this.wheelZoom()
-			const wrapEl = this.$refs.refWrap
-			if (!wrapEl) return
-			addEvent(wrapEl, "mousewheel", this.onMouseWheel)
-			addEvent(wrapEl, "DOMMouseScroll", this.onMouseWheel)
 			addEvent(
 				document.documentElement,
 				"mousewheel",
 				this.preventDefaultScroll,
 				{ passive: false }
 			)
-
-			addEvent(
-				document.documentElement,
-				"DOMMouseScroll",
-				this.preventDefaultScroll,
-				{ passive: false }
-			)
+			if (container) {
+				this.wheelZoom()
+				addEvent(container, "mouseout", () => {
+					this.disabled = true
+				})
+				addEvent(container, "mouseenter", () => {
+					console.log("mouseenter")
+					this.disabled = false
+				})
+			}
 		})
+	},
+	beforeDestroy() {
+		removeEvent(
+			document.documentElement,
+			"mousewheel",
+			this.preventDefaultScroll,
+			{ passive: false }
+		)
 	},
 	methods: {
 		preventDefaultScroll(ev) {
@@ -198,10 +206,10 @@ export default {
 			}
 			return ratio
 		},
-		zoomOut() {},
 		wheelZoom() {
 			const container = this.$parent.$el
 			container.addEventListener("wheel", e => {
+				if (this.disabled) return
 				let ratio = this.zoom(e.deltaY)
 
 				// 目标元素是img说明鼠标在img上，以鼠标位置为缩放中心，否则默认以图片中心点为缩放中心

@@ -46,14 +46,14 @@ export function addEvent(el, event, handler, options) {
 }
 
 // 删除事件
-export function removeEvent(el, event, handler) {
+export function removeEvent(el, event, handler, options) {
 	if (!el) {
 		return
 	}
 	if (el.detachEvent) {
 		el.detachEvent("on" + event, handler)
 	} else if (el.removeEventListener) {
-		el.removeEventListener(event, handler, true)
+		el.removeEventListener(event, handler, options || true)
 	} else {
 		el["on" + event] = null
 	}
