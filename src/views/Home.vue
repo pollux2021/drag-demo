@@ -20,8 +20,6 @@
 					:url="imageUrl"
 					:touchParentOffset.sync="touchParentOffset"
 					:imageState.sync="imageState"
-					:trippleSize="trippleSize"
-					:trippleVisible="trippleVisible"
 				>
 					<template #default="{ imageW, imageH, scale }">
 						<vue-drag-custom
